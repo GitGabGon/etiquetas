@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Generador de Etiquetas</title>
+</head>
+<body>
+  <h1>Generador de Etiquetas</h1>
+
+  <form id="etiquetaForm">
+    <label for="liceo">Liceo:</label>
+    <input type="text" id="liceo" name="liceo" required><br><br>
+
+    <label for="fecha">Fecha:</label>
+    <input type="date" id="fecha" name="fecha" required><br><br>
+
+    <button type="submit">Generar Documento</button>
+  </form>
+
+  <!-- LIBRERÍAS NECESARIAS -->
+  <script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.5/dist/pizzip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.25.2/build/docxtemplater.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+  <script>
+    document.getElementById("etiquetaForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const liceo = document.getElementById("liceo").value;
+      const fecha = document.getElementById("fecha").value;
+
+      fetch("kclo3.docx")
+        .then(response => response.arrayBuffer())
+        .then(content => {
+          const zip = new PizZip(content);
+          const doc = new window.docxtemplater().loadZip(zip);
+
+          doc.setData({ liceo, fecha });
+
+          try {
+            doc.render();
+            const blob = doc.getZip().generate({ type: "blob" });
+            saveAs(blob, "etiquetas_generadas.docx");
+          } catch (error) {
+            console.error("Error al generar el documento:", error);
+            alert("Ocurrió un error al generar el documento.");
+          }
+        })
+        .catch(error => {
+          console.error("No se pudo cargar la plantilla:", error);
+          alert("No se pudo cargar la plantilla Word.");
+        });
+    });
+  </script>
+</body>
+</html>
