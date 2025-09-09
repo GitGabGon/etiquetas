@@ -18,10 +18,15 @@
     <button type="submit">Generar Documento</button>
   </form>
 
-  <!-- LIBRERÍAS NECESARIAS -->
-  <script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.5/dist/pizzip.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.25.2/build/docxtemplater.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+  <!-- LIBRERÍAS NECESARIAS --><!-- PizZip (debe ir primero) -->
+<script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.5/dist/pizzip.min.js"></script>
+
+<!-- Docxtemplater (usa PizZip internamente) -->
+<script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.25.2/build/docxtemplater.js"></script>
+
+<!-- FileSaver (para descargar el archivo) -->
+<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
 
   <script>
     document.getElementById("etiquetaForm").addEventListener("submit", function(event) {
@@ -55,4 +60,5 @@
   </script>
 </body>
 </html>
+
 
